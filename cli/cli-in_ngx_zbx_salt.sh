@@ -12,12 +12,25 @@ RES='\033[0m'
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/pre_cli.conf"
+WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel nmap zlib-devel pcre-devel openssl-devel gd-devel tree"
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+New_yum () {
+echo -e "${GREEN_COLOR}安装依赖环境包$RES"
+mkdir -p /etc/yum.repos.d/old && mv /etc/yum.repos.d/*.repo old/
+cd /etc/yum.repos.d/ && $WGET_YUM
+tar xf yum.tar.gz
+yum clean all && yum makecache
+$YUM
+}
+echo -e "${GREEN_COLOR}安装依赖环境包$RES"
+New_yum
+
 
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
 sed 's#centos7#QF-Pro-cli#g' /etc/hostname
 mkdir -p /home/{tools,scripes,projects} && cd /home/tools
-yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel tree
 useradd www
 wget http://nginx.org/download/nginx-1.14.2.tar.gz
 tar xf nginx-1.14.2.tar.gz && cd nginx-1.14.2

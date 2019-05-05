@@ -12,6 +12,21 @@ RES='\033[0m'
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pre_api.conf"
+WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree"
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+New_yum () {
+echo -e "${GREEN_COLOR}安装依赖环境包$RES"
+mkdir -p /etc/yum.repos.d/old && mv /etc/yum.repos.d/*.repo old/
+cd /etc/yum.repos.d/ && $WGET_YUM
+tar xf yum.tar.gz
+yum clean all && yum makecache
+$YUM
+}
+echo -e "${GREEN_COLOR}安装依赖环境包$RES"
+New_yum
+
+
 
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
