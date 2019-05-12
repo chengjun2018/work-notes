@@ -13,7 +13,7 @@ WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/maste
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/pre_cli.conf"
 WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
-YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel nmap zlib-devel pcre-devel openssl-devel gd-devel tree"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel nmap zlib-devel pcre-devel openssl-devel gd-devel tree net-tools"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
