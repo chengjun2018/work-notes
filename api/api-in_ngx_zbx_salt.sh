@@ -13,7 +13,11 @@ HOST="`cat /etc/hostname`"
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pre_api.conf"
+WGET_NGINX_OSS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/oss.conf"
 WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
+WGET_FILE="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_file.tar.gz"
+WGET_SCRIPTS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_scripts.tar.gz"
+WGET_SSH="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/sshd_config"
 YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
@@ -32,7 +36,7 @@ echo -e "${GREEN_COLOR}安装依赖环境包$RES"
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
 sed -i 's#$HOST#QF-Pro-api#g' /etc/hostname
-mkdir -p /home/{tools,scripes,projects} && cd /home/tools
+mkdir -p /home/{tools,scripes,projects,data} && cd /home/tools
 yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel tree
 useradd www
 wget http://nginx.org/download/nginx-1.14.2.tar.gz
@@ -49,10 +53,22 @@ cd /etc/init.d/ && $WGET_NGINX
 cd /home/application/nginx/conf/ && mv nginx.conf nginx.conf.bck 
 $WGET_P_NGINX
 cd /home/application/nginx/conf/vhost/ &&  $WGET_V_NGINX
+cd /home/application/nginx/conf/vhost/ && $WGET_NGINX_OSS
 chkconfig --add /etc/init.d/nginx
 chmod 755 /etc/init.d/nginx
 chkconfig --add nginx
 /sbin/chkconfig --level 345 nginx on
+}
+
+In_file (){
+cd /home/data && $WGET_FILE
+tar xf pro_file.tar.gz
+cd /home/tools/ && $WGET_SCRIPTS
+tar xf pro_scripts.tar.gz -C /opt/ && mv /opt/scripts/* /home/scripts/
+rm -rf /opt/scripts
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bck 
+cd /etc/ssh/ && $WGET_SSH
+systemctl restart sshd
 }
 
 In_zbx (){
@@ -63,12 +79,32 @@ yum makecache
 yum install -y zabbix-agent
 sed -i 's#127.0.0.1#zabbix.irainbow7.com#g' /etc/zabbix/zabbix_agentd.conf
 sed -i 's#Hostname=Zabbix server#Hostname=QF_Pro_api#g' /etc/zabbix/zabbix_agentd.conf
+cat >>/etc/zabbix/zabbix_agentd.conf<<EOF
+# NGINX - 参数固定
+UserParameter=nginx.Accepted-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a accepted
+UserParameter=nginx.Active-Connections,/etc/zabbix/scripts/getNginxInfo.py -h  127.0.0.1 -a active
+UserParameter=nginx.Handled-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a handled
+UserParameter=nginx.Reading-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a reading
+UserParameter=nginx.Total-Requests,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a requests
+UserParameter=nginx.Waiting-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a waiting
+UserParameter=nginx.Writting-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a writing
+# NGINX  - 变量形式
+UserParameter=nginx.status[*],/etc/zabbix/scripts/ngx_status.sh $1
+# PHP-FPM
+UserParameter=php-fpm.status[*],/etc/zabbix/scripts/php-fpm_status.sh $1
+# 因为监控的是另外主机的fpm，因此version不可用
+UserParameter=php-fpm.version,/usr/bin/php-fpm -v | awk 'NR==1{print $0}'
+#监控php进程数
+UserParameter=adminphp,ps -ef|grep iswoole_front|grep -v grep|wc -l
+UserParameter=frontendphp,ps -ef|grep iswoole_admin|grep -v grep|wc -l
+EOF
 systemctl start zabbix-agent
 systemctl status zabbix-agent
 systemctl enable zabbix-agent
 }
 
 system_os (){
+
 echo -e "${YELLOW_COLOR}###########系统内核优化#################$RES"
 cat >>/etc/sysctl.conf<<EOF
 net.ipv4.tcp_fin_timeout = 2
@@ -111,6 +147,8 @@ systemctl start salt-minion
 
 In_nginx
  sleep 3
+In_file
+ sleep 3
 In_zbx
  sleep 3
 system_os
@@ -119,7 +157,8 @@ In_ntp
  sleep 3
 In_salt
 
-echo -e "${BLUE_COLOR}Install 1)nginx 2)zabbix 3)ntp 4)salt$RES"
+
+echo -e "${BLUE_COLOR}Install 1)nginx 2)zabbix 3)ntp 4)salt 5)In_file$RES"
 
 
 #############################
