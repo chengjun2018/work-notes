@@ -19,7 +19,7 @@ WGET_FILE="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master
 WGET_SCRIPTS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_scripts.tar.gz"
 WGET_ZBX_SCRIPT="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/zabbix/zbx_scripts.tar.gz"
 WGET_SSH="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/sshd_config"
-YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree lsof"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree lsof unzip "
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
@@ -44,7 +44,7 @@ wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/proxy/ngin
 tar xf nginx-1.14.2.tar.gz && cd nginx-1.14.2
 ./configure --user=www --group=www --prefix=/home/application/nginx1.14.2  --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --lock-path=/var/lock/subsys/nginx  --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module  --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module
 echo -e "${GREEN_COLOR}############开始编译make###############$RES"
- make && make install
+ make -j2 && make install
 ############################
 ln -s /home/application/nginx1.14.2/ /home/application/nginx
 echo -e "${GREEN_COLOR}############配置启动配置文件##############$RES"
@@ -55,11 +55,51 @@ cd /home/application/nginx/conf/ && mv nginx.conf nginx.conf.bck
 $WGET_P_NGINX
 cd /home/application/nginx/conf/vhost/ &&  $WGET_V_NGINX
 cd /home/application/nginx/conf/vhost/ && $WGET_NGINX_OSS
+cat >>/etc/profile<<EOF
+PATH=$PATH:/home/application/nginx/sbin/
+EOF
+source /etc/profile
 chkconfig --add /etc/init.d/nginx
 chmod 755 /etc/init.d/nginx
 chkconfig --add nginx
 /sbin/chkconfig --level 345 nginx on
 }
+
+In_php (){
+yum install -y libxml2 m4 autoconf libxml2-devel bzip2-devel.x86_64 curl-devel libxslt-devel postgresql-devel
+cd /home/tools
+wget http://pecl.php.net/get/redis-4.3.0.tgz
+wget https://www.php.net/distributions/php-7.2.18.tar.gz
+wget https://gitee.com/swoole/swoole/repository/archive/master.zip?ref=master&sha=73c1b2200b1edc4f27365ef2f6edf19ff8cd17db&format=zip&captcha=qaimub && mv master.zip\?ref\=master master.zip
+unzip master.zip  
+tar xf php-7.2.18.tar.gz && tar xf redis-4.3.0.tgz 
+cd php-7.2.18/
+./configure --prefix=/home/application/php --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=www --with-fpm-group=www --with-libdir=/lib/x86_64-linux-gnu/ --enable-ftp --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm --with-iconv --with-xpm-dir=/usr
+make clean && make && make install
+cp php.ini-production /home/application/php/lib/php.ini
+cat >>/etc/profile<<EOF
+PATH=$PATH:/home/application/php/bin
+export PATH
+EOF
+source /etc/profile
+cp /home/application/php/etc/php-fpm.conf.default /home/application/php/etc/php-fpm.conf
+cp /home/application/php/etc/php-fpm.d/www.conf.default /home/application/php/etc/php-fpm.d/www.conf
+cp /home/tools/php-7.2.18/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
+chmod +x /etc/init.d/php-fpm
+#安装拓展redis
+cd /home/tools/redis-4.3.0
+phpize
+./configure --with-php-config=/home/application/php/bin/php-config
+make -j2 && make install
+echo "extension=redis.so" >> /home/application/php/lib/php.ini 
+#安装拓展swoole
+cd /home/tools/swoole/
+phpize
+./configure --with-php-config=/home/application/php/bin/php-config
+make -j2 && make install
+echo "extension=swoole" >> /home/application/php/lib/php.ini
+}
+
 
 In_file (){
 cd /home/data && $WGET_FILE

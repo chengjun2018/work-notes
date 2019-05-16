@@ -40,7 +40,7 @@ wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/proxy/ngin
 tar xf nginx-1.14.2.tar.gz && cd nginx-1.14.2
 ./configure --user=www --group=www --prefix=/home/application/nginx1.14.2  --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --lock-path=/var/lock/subsys/nginx  --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module  --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module
 echo -e "${GREEN_COLOR}############开始编译make###############$RES"
- make && make install
+make -j2 && make install
 ############################
 ln -s /home/application/nginx1.14.2/ /home/application/nginx
 echo -e "${GREEN_COLOR}############配置启动配置文件##############$RES"
@@ -51,6 +51,10 @@ cd /home/application/nginx/conf/ && mv nginx.conf nginx.conf.bck
 $WGET_P_NGINX
 cd /home/application/nginx/conf/vhost/ &&  $WGET_V_NGINX
 cd /home/application/nginx/conf/vhost/ &&  $WGET_NGX_STATUS
+cat >>/etc/profile<<EOF
+PATH=$PATH:/home/application/nginx/sbin/
+EOF
+source /etc/profile
 chkconfig --add /etc/init.d/nginx
 chmod 755 /etc/init.d/nginx
 chkconfig --add nginx
