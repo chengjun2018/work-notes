@@ -12,7 +12,10 @@ RES='\033[0m'
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/pre_cli.conf"
+WGET_NGX_STATUS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/default.conf"
+WGET_ZBX_SCRIPT="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/cli/zabbix/zbx_script.tar.gz"
 WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
+WGET_SSH="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/sshd_config"
 YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel nmap zlib-devel pcre-devel openssl-devel gd-devel tree net-tools"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
@@ -46,10 +49,17 @@ cd /etc/init.d/ && $WGET_NGINX
 cd /home/application/nginx/conf/ && mv nginx.conf nginx.conf.bck 
 $WGET_P_NGINX
 cd /home/application/nginx/conf/vhost/ &&  $WGET_V_NGINX
+cd /home/application/nginx/conf/vhost/ &&  $WGET_NGX_STATUS
 chkconfig --add /etc/init.d/nginx
 chmod 755 /etc/init.d/nginx
 chkconfig --add nginx
 /sbin/chkconfig --level 345 nginx on
+}
+
+In_file (){
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bck 
+cd /etc/ssh/ && $WGET_SSH
+systemctl restart sshd
 }
 
 In_zbx (){
@@ -60,6 +70,20 @@ yum makecache
 yum install -y zabbix-agent
 sed -i 's#127.0.0.1#zabbix.irainbow7.com#g' /etc/zabbix/zabbix_agentd.conf
 sed -i 's#Hostname=Zabbix server#Hostname=QF_Pro_cli#g' /etc/zabbix/zabbix_agentd.conf
+cd /etc/zabbix/ && $WGET_ZBX_SCRIPT
+tar xf zbx_script.tar.gz
+cat >>/etc/zabbix/zabbix_agentd.conf<<EOF
+# NGINX - 参数固定
+UserParameter=nginx.Accepted-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a accepted
+UserParameter=nginx.Active-Connections,/etc/zabbix/scripts/getNginxInfo.py -h  127.0.0.1 -a active
+UserParameter=nginx.Handled-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a handled
+UserParameter=nginx.Reading-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a reading
+UserParameter=nginx.Total-Requests,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a requests
+UserParameter=nginx.Waiting-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a waiting
+UserParameter=nginx.Writting-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a writing
+# NGINX  - 变量形式
+UserParameter=nginx.status[*],/etc/zabbix/scripts/ngx_status.sh $1
+EOF
 systemctl start zabbix-agent
 systemctl status zabbix-agent
 systemctl enable zabbix-agent
@@ -115,8 +139,10 @@ system_os
 In_ntp
  sleep 3
 In_salt
+ sleep 3
+In_file
 
-echo -e "${BLUE_COLOR}Install 1)nginx 2)zabbix 3)ntp 4)salt$RES"
+echo -e "${BLUE_COLOR}Install 1)nginx 2)zabbix 3)ntp 4)salt 5)In_file$RES"
 
 
 ############################

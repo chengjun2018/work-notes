@@ -17,6 +17,7 @@ WGET_NGINX_OSS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/m
 WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
 WGET_FILE="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_file.tar.gz"
 WGET_SCRIPTS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_scripts.tar.gz"
+WGET_ZBX_SCRIPT="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/zabbix/zbx_scripts.tar.gz"
 WGET_SSH="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/sshd_config"
 YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -79,6 +80,8 @@ yum makecache
 yum install -y zabbix-agent
 sed -i 's#127.0.0.1#zabbix.irainbow7.com#g' /etc/zabbix/zabbix_agentd.conf
 sed -i 's#Hostname=Zabbix server#Hostname=QF_Pro_api#g' /etc/zabbix/zabbix_agentd.conf
+cd /etc/zabbix/ && $WGET_ZBX_SCRIPT
+tar xf zbx_scripts.tar.gz
 cat >>/etc/zabbix/zabbix_agentd.conf<<EOF
 # NGINX - 参数固定
 UserParameter=nginx.Accepted-Connections,/etc/zabbix/scripts/getNginxInfo.py -h 127.0.0.1 -a accepted
