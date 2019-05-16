@@ -29,7 +29,7 @@ yum clean all && yum makecache
 $YUM
 }
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
-#New_yum
+New_yum
 
 
 
