@@ -19,7 +19,7 @@ WGET_FILE="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master
 WGET_SCRIPTS="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pro_scripts.tar.gz"
 WGET_ZBX_SCRIPT="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/zabbix/zbx_scripts.tar.gz"
 WGET_SSH="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/sshd_config"
-YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree lsof"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
@@ -38,9 +38,9 @@ In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
 sed -i 's#$HOST#QF-Pro-api#g' /etc/hostname
 mkdir -p /home/{tools,scripes,projects,data} && cd /home/tools
-yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel tree
 useradd www
-wget http://nginx.org/download/nginx-1.14.2.tar.gz
+#wget http://nginx.org/download/nginx-1.14.2.tar.gz
+wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/proxy/nginx-1.14.2.tar.gz
 tar xf nginx-1.14.2.tar.gz && cd nginx-1.14.2
 ./configure --user=www --group=www --prefix=/home/application/nginx1.14.2  --error-log-path=/var/log/nginx/error.log --pid-path=/var/run/nginx.pid --lock-path=/var/lock/subsys/nginx  --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module  --with-http_geoip_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module
 echo -e "${GREEN_COLOR}############开始编译make###############$RES"
