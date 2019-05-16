@@ -107,7 +107,8 @@ In_file (){
 cd /home/data && $WGET_FILE
 tar xf pro_file.tar.gz
 cd /home/tools/ && $WGET_SCRIPTS
-tar xf pro_scripts.tar.gz -C /opt/ && mv /opt/scripts/* /home/scripts/
+tar xf pro_scripts.tar.gz -C /opt/ 
+mv /opt/scripts/* /home/scripes/
 rm -rf /opt/scripts
 mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bck 
 cd /etc/ssh/ && $WGET_SSH
