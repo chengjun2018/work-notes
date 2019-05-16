@@ -8,6 +8,7 @@ GREEN_COLOR='\033[42;37'
 YELLOW_COLOR='\033[43;37m'
 BLUE_COLOR='\033[44;37m'
 PINK_COLOR='\033[45;37m'
+N='\033[32m'
 RES='\033[0m'
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx.conf"
@@ -66,7 +67,7 @@ nginx
 }
 
 In_php (){
-echo -e "${YELLOW_COLOR}###########部署PHP-7.2.18#################$RES"
+echo -e "${N}###########部署PHP-7.2.18#################$RES"
 yum install -y libxml2 m4 autoconf libxml2-devel bzip2-devel.x86_64 curl-devel libxslt-devel postgresql-devel
 cd /home/tools
 wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/redis-4.3.0.tgz
