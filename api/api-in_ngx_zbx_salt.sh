@@ -63,6 +63,7 @@ chkconfig --add /etc/init.d/nginx
 chmod 755 /etc/init.d/nginx
 chkconfig --add nginx
 /sbin/chkconfig --level 345 nginx on
+nginx
 }
 
 In_php (){
@@ -86,6 +87,7 @@ cp /home/application/php/etc/php-fpm.conf.default /home/application/php/etc/php-
 cp /home/application/php/etc/php-fpm.d/www.conf.default /home/application/php/etc/php-fpm.d/www.conf
 cp /home/tools/php-7.2.18/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
+/etc/init.d/php-fpm start
 #安装拓展redis
 cd /home/tools/redis-4.3.0
 phpize
@@ -189,6 +191,8 @@ systemctl start salt-minion
 }
 
 In_nginx
+ sleep 3
+In_php
  sleep 3
 In_file
  sleep 3
