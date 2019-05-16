@@ -100,8 +100,7 @@ echo "extension=redis.so" >> /home/application/php/lib/php.ini
 echo -e "${RED_COLOR}#########安装拓展swoole###############$RES"
 cd /home/tools/swoole/
 phpize
-./configure -
--with-php-config=/home/application/php/bin/php-config
+./configure --with-php-config=/home/application/php/bin/php-config
 make -j4 && make install
 echo "extension=swoole" >> /home/application/php/lib/php.ini
 source /etc/profile
