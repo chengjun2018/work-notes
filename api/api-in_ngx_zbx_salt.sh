@@ -9,11 +9,12 @@ YELLOW_COLOR='\033[43;37m'
 BLUE_COLOR='\033[44;37m'
 PINK_COLOR='\033[45;37m'
 RES='\033[0m'
+HOST="`cat /etc/hostname`"
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pre_api.conf"
 WGET_YUM="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/yum/yum.tar.gz"
-YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree net-tools"
+YUM="yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel namp tree"
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 New_yum () {
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
@@ -24,13 +25,13 @@ yum clean all && yum makecache
 $YUM
 }
 echo -e "${GREEN_COLOR}安装依赖环境包$RES"
-New_yum
+#New_yum
 
 
 
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
-sed 's#centos7#QF-Pro-api#g' /etc/hostname
+sed -i 's#$HOST#QF-Pro-api#g' /etc/hostname
 mkdir -p /home/{tools,scripes,projects} && cd /home/tools
 yum -y install gcc-c++ pcre pcre-devel zlib zlib-devel openssl  wget vim gcc gd-devel gd-devel GeoIP-devel zlib-devel pcre-devel openssl-devel gd-devel tree
 useradd www
@@ -121,7 +122,7 @@ In_salt
 echo -e "${BLUE_COLOR}Install 1)nginx 2)zabbix 3)ntp 4)salt$RES"
 
 
-############################
-###安装宝塔bt############
-#######################
-#yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh
+#############################
+####安装宝塔bt############
+########################
+##yum install -y wget && wget -O install.sh http://download.bt.cn/install/install_6.0.sh && sh install.sh
