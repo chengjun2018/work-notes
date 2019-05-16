@@ -69,10 +69,10 @@ nginx
 In_php (){
 yum install -y libxml2 m4 autoconf libxml2-devel bzip2-devel.x86_64 curl-devel libxslt-devel postgresql-devel
 cd /home/tools
-wget http://pecl.php.net/get/redis-4.3.0.tgz
-wget https://www.php.net/distributions/php-7.2.18.tar.gz
-wget https://gitee.com/swoole/swoole/repository/archive/master.zip?ref=master&sha=73c1b2200b1edc4f27365ef2f6edf19ff8cd17db&format=zip&captcha=qaimub && mv master.zip\?ref\=master master.zip
-unzip master.zip  
+wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/redis-4.3.0.tgz
+wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/php-7.2.18.tar.gz
+wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/swoole.zip
+unzip unzip swoole.zip 
 tar xf php-7.2.18.tar.gz && tar xf redis-4.3.0.tgz 
 cd php-7.2.18/
 ./configure --prefix=/home/application/php --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=www --with-fpm-group=www --with-libdir=/lib/x86_64-linux-gnu/ --enable-ftp --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm --with-iconv --with-xpm-dir=/usr
@@ -100,6 +100,7 @@ phpize
 ./configure --with-php-config=/home/application/php/bin/php-config
 make -j2 && make install
 echo "extension=swoole" >> /home/application/php/lib/php.ini
+source /etc/profile
 }
 
 
