@@ -38,7 +38,7 @@ In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
 echo "QF-Pro-api" > /etc/hostname 
 mkdir -p /home/{tools,scripes,projects,data} && cd /home/tools
-useradd www
+/usr/sbin/useradd www
 #wget http://nginx.org/download/nginx-1.14.2.tar.gz
 wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/proxy/nginx-1.14.2.tar.gz
 tar xf nginx-1.14.2.tar.gz && cd nginx-1.14.2
@@ -180,7 +180,8 @@ sleep 2
 In_ntp () {
 echo -e  "${PINK_COLOR}############ntpdate###################$RES"
 yum install ntpdate ntp -y
-ntpdate asia.pool.ntp.org
+echo -e "#Synchronize every half hour.\n*/30 * * * * /usr/sbin/ntpdate asia.pool.ntp.org >/dev/null 2>&1" >>/var/spool/cron/root
+systemctl restart crond
 }
 #########################################
 #########锁账户文件####################

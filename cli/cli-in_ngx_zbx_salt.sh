@@ -117,7 +117,8 @@ sysctl -p
 In_ntp () {
 echo -e  "${PINK_COLOR}############ntpdate###################$RES"
 yum install ntpdate ntp -y
-ntpdate asia.pool.ntp.org
+echo -e "#Synchronize every half hour.\n*/30 * * * * /usr/sbin/ntpdate asia.pool.ntp.org >/dev/null 2>&1" >>/var/spool/cron/root
+systemctl restart crond
 }
 #########################################
 #########锁账户文件####################
