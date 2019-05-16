@@ -9,7 +9,6 @@ YELLOW_COLOR='\033[43;37m'
 BLUE_COLOR='\033[44;37m'
 PINK_COLOR='\033[45;37m'
 RES='\033[0m'
-HOST="`cat /etc/hostname`"
 WGET_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx"
 WGET_P_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/nginx.conf"
 WGET_V_NGINX="wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/pre_api.conf"
@@ -36,7 +35,7 @@ New_yum
 
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
-sed -i 's#$HOST#QF-Pro-api#g' /etc/hostname
+echo "QF-Pro-api" > /etc/hostname 
 mkdir -p /home/{tools,scripes,projects,data} && cd /home/tools
 useradd www
 #wget http://nginx.org/download/nginx-1.14.2.tar.gz
@@ -67,12 +66,13 @@ nginx
 }
 
 In_php (){
+echo -e "${YELLOW_COLOR}###########部署PHP-7.2.18#################$RES"
 yum install -y libxml2 m4 autoconf libxml2-devel bzip2-devel.x86_64 curl-devel libxslt-devel postgresql-devel
 cd /home/tools
 wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/redis-4.3.0.tgz
 wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/php-7.2.18.tar.gz
 wget https://raw.githubusercontent.com/chengjun2018/work-notes/master/api/php/swoole.zip
-unzip unzip swoole.zip 
+unzip swoole.zip >/dev/null 
 tar xf php-7.2.18.tar.gz && tar xf redis-4.3.0.tgz 
 cd php-7.2.18/
 ./configure --prefix=/home/application/php --with-pdo-pgsql --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=/usr --enable-soap --enable-calendar --with-curl --with-mcrypt --with-gd --with-pgsql --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-pdo-mysql --with-mysqli --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=www --with-fpm-group=www --with-libdir=/lib/x86_64-linux-gnu/ --enable-ftp --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm --with-iconv --with-xpm-dir=/usr
@@ -88,34 +88,40 @@ cp /home/application/php/etc/php-fpm.d/www.conf.default /home/application/php/et
 cp /home/tools/php-7.2.18/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm
 chmod +x /etc/init.d/php-fpm
 /etc/init.d/php-fpm start
-#安装拓展redis
+ sleep 5
+echo -e "${YELLOW_COLOR}###########安装拓展redis-4.3.0#################$RES"
 cd /home/tools/redis-4.3.0
 phpize
 ./configure --with-php-config=/home/application/php/bin/php-config
 make -j2 && make install
 echo "extension=redis.so" >> /home/application/php/lib/php.ini 
 #安装拓展swoole
+ Sleep 3
+echo -e "${RED_COLOR}#########安装拓展swoole###############$RES"
 cd /home/tools/swoole/
 phpize
-./configure --with-php-config=/home/application/php/bin/php-config
+./configure -
+-with-php-config=/home/application/php/bin/php-config
 make -j2 && make install
 echo "extension=swoole" >> /home/application/php/lib/php.ini
 source /etc/profile
 }
 
-
+ sleep 2
 In_file (){
+echo -e "${YELLOW_COLOR}###########Copy后端文件#################$RES"
 cd /home/data && $WGET_FILE
 tar xf pro_file.tar.gz
 cd /home/tools/ && $WGET_SCRIPTS
 tar xf pro_scripts.tar.gz -C /opt/ 
 mv /opt/scripts/* /home/scripes/
+sed -i 's#pre#pro#g' /home/scripes/*.sh
 rm -rf /opt/scripts
 mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bck 
 cd /etc/ssh/ && $WGET_SSH
 systemctl restart sshd
 }
-
+sleep 2
 In_zbx (){
 echo -e "${GREEN_COLOR}#######安装zabbix-agentd#########$RES"
 cd /home/tools/
@@ -149,7 +155,7 @@ systemctl start zabbix-agent
 systemctl status zabbix-agent
 systemctl enable zabbix-agent
 }
-
+sleep 2
 system_os (){
 
 echo -e "${YELLOW_COLOR}###########系统内核优化#################$RES"
@@ -170,7 +176,7 @@ net.ipv4.tcp_max_orphans = 2000
 EOF
 sysctl -p
 }
-
+sleep 2
 In_ntp () {
 echo -e  "${PINK_COLOR}############ntpdate###################$RES"
 yum install ntpdate ntp -y
@@ -179,8 +185,8 @@ ntpdate asia.pool.ntp.org
 #########################################
 #########锁账户文件####################
 ######################################
-#chattr +i /etc/passwd
-#chattr +i /etc/group
+chattr +i /etc/passwd
+chattr +i /etc/group
 In_salt (){
 echo  -e  "${YELLOW_COLOR}############安装salt-minion##############$RES"
 wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -191,7 +197,7 @@ sed -i 's#\#id:#id: QF-Pro-api#' /etc/salt/minion
 systemctl enable salt-minion
 systemctl start salt-minion
 }
-
+sleep 2
 In_nginx
  sleep 3
 In_php

@@ -32,7 +32,7 @@ New_yum
 
 In_nginx (){
 echo -e "${RED_COLOR}#########开始安装nginx-1.14.2###############$RES"
-sed 's#centos7#QF-Pro-cli#g' /etc/hostname
+echo "QF-Pro-cli" > /etc/hostname 
 mkdir -p /home/{tools,scripes,projects} && cd /home/tools
 useradd www
 #wget http://nginx.org/download/nginx-1.14.2.tar.gz
