@@ -14,8 +14,8 @@
 # SELinux about this change.
 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
 #
-#Port 4444
-Port 22
+#Port 22
+Port 4444
 AddressFamily inet
 ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -37,7 +37,7 @@ LogLevel VERBOSE
 
 LoginGraceTime 2m
 #PermitRootLogin without-password
-#PermitRootLogin no
+PermitRootLogin no
 StrictModes yes
 MaxAuthTries 6
 MaxSessions 10
@@ -65,7 +65,7 @@ IgnoreRhosts yes
 # To disable tunneled clear text passwords, change to no here!
 #PasswordAuthentication yes
 PermitEmptyPasswords no
-PasswordAuthentication yes
+PasswordAuthentication no
 
 # Change to no to disable s/key passwords
 #ChallengeResponseAuthentication yes
@@ -98,7 +98,8 @@ GSSAPICleanupCredentials yes
 # problems.
 UsePAM yes
 
-Allowusers root ultraserve
+#Allowusers root ultraserve
+Allowusers watson
 AllowAgentForwarding no
 AllowTcpForwarding no
 GatewayPorts no
