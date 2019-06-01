@@ -21,7 +21,8 @@ make && make install
 mkdir -p /usr/local/redis/etc
 mkdir -p /usr/local/redis/bin
 mkdir -p /home/data/{logs,redis}
-cp -r /usr/local/redis/src/redis-cli redis-server redis-benchmark redis-check-aof redis-trib.rb redis-sentinel redis-check-rdb /usr/local/redis/bin/
+cd /usr/local/redis/src/
+cp redis-cli redis-server redis-benchmark redis-check-aof redis-trib.rb redis-sentinel redis-check-rdb /usr/local/redis/bin/
 cd /usr/local/redis/etc/ && $REDIS_CONF
 }
 ########################################################################################################
@@ -44,3 +45,6 @@ cd /etc/keepalived/ && $KEEPALIVED_SCRIPTS
 tar xf keepalived.scripts.tar.gz && rm -rf keepalived.scripts.tar.gz
 }
 
+redis
+
+keepalived
