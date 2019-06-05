@@ -14,7 +14,7 @@
 # SELinux about this change.
 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
 #
-#Port 22
+Port 22
 Port 4444
 AddressFamily inet
 ListenAddress 0.0.0.0
@@ -99,7 +99,7 @@ GSSAPICleanupCredentials yes
 UsePAM yes
 
 #Allowusers root ultraserve
-Allowusers watson
+Allowusers watson root
 AllowAgentForwarding no
 AllowTcpForwarding no
 GatewayPorts no
