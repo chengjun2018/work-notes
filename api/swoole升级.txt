@@ -1,0 +1,10 @@
+cd /home/tools
+wget https://pecl.php.net/get/swoole-4.4.0.tgz
+tar xf swoole-4.4.0.tgz 
+cd /home/tools/swoole-4.4.0
+phpize
+./configure --with-php-config=/www/server/php/72/bin/php-config --enable-openssl 
+make clean
+make -j4 && make install
+/etc/init.d/php-fpm-72 restart
+php --ri swoole

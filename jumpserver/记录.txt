@@ -1,0 +1,54 @@
+tar xvf Python-3.6.1.tar.xz && cd Python-3.6.1
+./configure  &&  make  -j 4 && make install
+cd ..
+python3 -m venv py3
+source /home/tools/py3/bin/activate
+git clone --depth=1 https://github.com/jumpserver/jumpserver.git && cd jumpserver && git checkout master
+cd requirements/
+yum install -y `cat rpm_requirements.txt`
+cd  ../../
+pip install -r jumpserver/requirements/requirements.txt
+yum install -y redis
+systemctl enable redis ; systemctl start redis
+yum  install mariadb mariadb-devel mariadb-server   -y 
+systemctl enable mariadb  ;  systemctl start mariadb
+create database jumpserver default charset 'utf8';
+grant all on jumpserver.* to 'jumpserver'@'127.0.0.1' identified by '123456';
+cd jumpserver/
+cp  config_example.yml config.py
+
+
+yum update -y
+yum -y install redis
+systemctl enable redis
+systemctl start redis
+yum -y install mariadb mariadb-devel mariadb-server MariaDB-shared
+systemctl enable mariadb
+systemctl start mariadb
+mysql -uroot -e "create database jumpserver default charset 'utf8'; grant all on jumpserver.* to 'jumpserver'@'127.0.0.1' identified by '1qaz2WSX'; flush privileges;"
+cat >>/etc/yum.repos.d/nginx.repo<<EOF
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+EOF
+yum -y install nginx
+systemctl enable nginx
+yum -y install python36 python36-devel
+cd /opt/
+python3.6 -m venv py3  
+source /opt/py3/bin/activate
+git clone --depth=1 https://github.com/jumpserver/jumpserver.git
+yum -y install $(cat /opt/jumpserver/requirements/rpm_requirements.txt)
+pip install --upgrade pip setuptools
+pip install -r /opt/jumpserver/requirements/requirements.txt
+
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum makecache fast
+rpm --import https://mirrors.aliyun.com/docker-ce/linux/centos/gpg
+yum -y install docker-ce
+systemctl enable docker
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
+systemctl restart docker
