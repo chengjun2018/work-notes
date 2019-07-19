@@ -1,0 +1,120 @@
+[ultra-centos-7.x-ultrarepo]
+name=UltraServe CentOS-7.x - UltraServe Repo Packages
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/noarch/ultraserve/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.x-nginx]
+name=UltraServe CentOS-7.x - Nginx
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/nginx/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-java]
+name=UltraServe CentOS-7.x - Java
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/java/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.x-ius]
+name=UltraServe CentOS-7.x - IUS
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/ius/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-epel]
+name=UltraServe CentOS-7.x - EPEL
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/epel/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-nodejs]
+name=UltraServe CentOS-7.x - Node.js
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/nodejs/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-yarn]
+name=UltraServe CentOS-7.x - Yarn
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/yarn/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-elasticsearch]
+name=UltraServe CentOS-7.x - ElasticSearch
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/elasticsearch/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-docker-ce]
+name=UltraServe CentOS-7.x - Docker CE Stable
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/docker/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-newrelic-infra]
+name=UltraServe CentOS-7.x - New Relic Infrastructure Agent
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/newrelic-infra/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.x-newrelic-java]
+name=UltraServe CentOS-7.x - New Relic Java Agent
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/noarch/newrelic-java/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-newrelic-php]
+name=UltraServe CentOS-7.x - New Relic PHP Agent
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/newrelic-php/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-erlang]
+name=UltraServe CentOS-7.x - Erlang
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/erlang/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-fuse]
+name=UltraServe CentOS-7.x - Fuse
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/fuse/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-s3fs]
+name=UltraServe CentOS-7.x - S3FS
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/s3fs/
+gpgcheck=0
+enabled=0
+
+
+[ultra-centos-7.x-rabbitmq]
+name=UltraServe CentOS-7.x - RabbitMQ
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/noarch/rabbitmq/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-oracle]
+name=UltraServe CentOS-7.x - Oracle
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/oracle/
+gpgcheck=0
+enabled=0
+
+[ultra-centos-7.x-glusterfs]
+name=UltraServe CentOS-7.x - GlusterFS
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/glusterfs/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.x-newrelic-java]
+name=UltraServe CentOS-7.x - NewRelic Java
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/newrelic-java/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.x-mysql]
+name=UltraServe CentOS-6.x - MySQL
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.x/x86_64/mysql/
+gpgcheck=0
+enabled=0

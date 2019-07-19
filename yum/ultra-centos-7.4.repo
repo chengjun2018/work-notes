@@ -1,0 +1,17 @@
+[ultra-centos-7.4-base]
+name=UltraServe CentOS-7.4 - Base
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.4/x86_64/os/base/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.4-updates]
+name=UltraServe CentOS-7.4 - Updates
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.4/x86_64/os/updates/
+gpgcheck=0
+enabled=1
+
+[ultra-centos-7.4-extras]
+name=UltraServe CentOS-7.4 - Extras
+baseurl=https://s3-ap-southeast-2.amazonaws.com/ultraserve-operations-ap-southeast-2-public-repo/centos/7.4/x86_64/os/extras/
+gpgcheck=0
+enabled=1
