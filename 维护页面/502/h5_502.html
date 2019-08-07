@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>502页面</title>
+    <style type="text/css">
+        body,html{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        div,p,button{
+            margin: 0;
+            padding: 0;
+        }
+        .box_502{
+            width: 100%;
+            height: 100%;
+            background: url('/oss/test/h5_img/502.jpg') no-repeat;
+            background-size:100% 100%;
+            position: relative;
+        }
+        @media screen and (orientation: portrait) {
+            /*竖屏 css*/
+            .box_botton{
+                position: absolute;
+                left: 50%;
+                bottom:17%;
+                transform: translateX(-50%);
+            }
+            .box_botton  button{
+                height: 0.87rem;
+                width: 3.9rem;
+                font-size: 0.32rem;
+                display: block;
+                color: #ffffff;
+                border: 2px solid #ac9455;
+                border-radius: 1.8rem;
+                background: transparent;
+                outline:none;
+            }
+            .box_botton  button:first-child{
+                margin-bottom: 0.2rem;
+            }
+            
+        }
+        @media screen and (orientation: landscape) {
+            /*横屏 css*/
+            .box_botton{
+                position: absolute;
+                left: 50%;
+                bottom:14.8%;
+                transform: translateX(-50%);
+            }
+            .box_botton  button{
+                height: 0.4rem;
+                width: 3rem;
+                font-size: 0.18rem;
+                display: block;
+                color: #ffffff;
+                border: 2px solid #ac9455;
+                border-radius: 1.5rem;
+                background: transparent;
+                outline:none;
+            }
+            .box_botton  button:first-child{
+                margin-bottom: 0.1rem;
+            }
+        }
+        .box_botton  .line_chat{
+            background: linear-gradient(#d5cb79 16%, #d2a358 53%,#d1ac43 80%);
+            color: #5b3b02;
+        }
+    </style>
+</head>
+<body>
+  <div class="box_502">
+      <div class="box_botton">
+            <button class="line_chat">联系客服</button>
+            <button class="btn_load" onclick="reloadPage()">刷新页面</button>
+      </div>
+  </div>  
+</body>
+<script>
+    (function (doc, win) {
+        var docEl = win.document.documentElement;
+        var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        /**
+            * ================================================
+            *   设置根元素font-size
+            * 当设备宽度为750时，根元素font-size=100px; 
+            × ================================================
+            */
+        var refreshRem = function () {
+            var clientWidth = win.innerWidth
+                            || doc.documentElement.clientWidth
+                            || doc.body.clientWidth;
+        
+            if (!clientWidth) return;
+            var fz;
+            var width = clientWidth;
+            fz = 100 * width / 750;
+            docEl.style.fontSize = fz + 'px';
+        };
+        
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, refreshRem, false);
+        doc.addEventListener('DOMContentLoaded', refreshRem, false);
+        refreshRem();
+    })(document, window);
+    // 刷新页面的点击实践
+    function reloadPage(){
+            window.location.href = window.location.href;
+        }
+</script>
+</html>

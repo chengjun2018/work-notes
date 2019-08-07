@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>太陽城集團 | Suncity Group</title>
+		<style>
+			html, body, div, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, p, 
+			blockquote, pre, form, input, textarea, fieldset, table, th, td {
+				margin: 0;
+				padding: 0;
+			}
+			a{
+				margin:0;
+				padding:0;
+				border:0;
+				font-size:100%;
+				vertical-align:baseline;
+				background:transparent;
+				text-decoration: none;
+				outline-style:none;
+			}
+			html,body{
+				width: 100%;
+				height: 100%;
+			}
+			button{
+				display: inline-block;
+				cursor: pointer;
+				background: #fff;
+				border: none;
+				color: #444;
+				-webkit-appearance: none;
+				text-align: center;
+				box-sizing: border-box;
+				outline: none;
+				margin: 0;
+				transition: .1s;
+				font-weight: 500;
+				-moz-user-select: none;
+				-webkit-user-select: none;
+				-ms-user-select: none;
+				padding: 8px 12px;
+				font-size: 14px;
+				border-radius: 5px;
+			}
+
+			.box {
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				margin: auto;
+				z-index: 9999999;
+				width: 100%;
+				height: 100%;
+				background-repeat: no-repeat;
+				background-size: 100% 100%;
+				background-image: url(oss/test/images/502_bg.png);
+			}
+			.cont{
+				width: 1000px;
+				height: 100%;
+				margin: 0 auto;
+				text-align: center;
+			}
+			.cont img{
+				min-height: 600px;
+			}
+			.lxkf,
+			.sxym{
+				display: block;
+				width: 380px;
+				height: 84px;
+				margin: 0 auto;
+				margin-top: 40px;
+				border-radius: 60px;
+				border: 2px solid #ac9455;
+				font-size: 30px;
+			}
+			.lxkf{
+				background: linear-gradient(to bottom, #d5c877 ,#d2a458,#d1ac43); /* 标准的语法 */
+				color: #5b3b02;
+			}
+			.sxym{
+				background: transparent;
+				color: #fff;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="cont">
+				<img src="oss/test/images/502.png" >
+				<button class="lxkf" type="button">联系客服</button>
+				<button class="sxym" type="button">刷新页面</button>
+			</div>
+		</div>
+		<script type="text/javascript">
+			
+			var lxkf = document.querySelector('.lxkf');
+			var sxym = document.querySelector('.sxym');
+			
+			lxkf.onclick = function(){
+				
+			};
+			sxym.onclick = function(){
+				console.log( '刷新页面' )
+				console.log( location.href )
+				location.href = location.href;
+			};
+			
+		</script>
+	</body>
+</html>

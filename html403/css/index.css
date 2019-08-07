@@ -1,0 +1,71 @@
+.html403_box {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+	z-index: 9999999;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-image: url(../images/bg.jpg);
+}
+
+.html403_cont {
+	position: relative;
+	width: 1200px;
+	height: 100%;
+	text-align: center;
+	margin: auto;
+}
+
+.html403_my {
+	position: absolute;
+	right: -135px;
+	bottom: 0px;
+}
+
+.html403_lxkf {
+	position: absolute;
+	left: 225px;
+	top: 687px;
+	width: 248px;
+	height: 68px;
+	border-radius: 25px;
+	cursor: pointer;
+}
+
+.html403_qp,
+.html403_sz {
+	position: absolute;
+	animation: move 3s infinite;
+}
+
+.html403_qp {
+	left: 910px;
+	top: 243px;
+}
+
+.html403_sz {
+	left: 567px;
+	top: 685px;
+}
+
+@keyframes move {
+	0% {
+		transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+	}
+
+	50% {
+		transform: translate(0px, 20px);
+		-ms-transform: translate(0px, 20px);
+	}
+
+	100% {
+		transform: translate(0, 0);
+		-ms-transform: translate(0, 0);
+	}
+}
